@@ -1,4 +1,3 @@
-
 class TasksController < ApplicationController 
 
   get '/tasks' do
@@ -15,6 +14,11 @@ class TasksController < ApplicationController
     erb :'/tasks/new'
   end
 
+  post '/tasks/new' do
+    Task.create(:name => params[:name], :list_id => params[:list_id])
+    redirect '/tasks'
+  end
+
   get '/tasks/new/:id' do
     redirect_if_not_logged_in
     @list = List.find_by_id(params[:id])
@@ -24,11 +28,6 @@ class TasksController < ApplicationController
   post '/tasks/new/:id' do
     @list = List.find_by_id(params[:id])
     Task.create(:name => params[:name], :list_id => params[:id])
-    redirect '/tasks'
-  end
-
-  post '/tasks/new' do
-    Task.create(:name => params[:name], :list_id => params[:list_id])
     redirect '/tasks'
   end
 
