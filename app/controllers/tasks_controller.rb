@@ -1,3 +1,4 @@
+
 class TasksController < ApplicationController 
 
   get '/tasks' do
@@ -9,6 +10,7 @@ class TasksController < ApplicationController
 
   get '/tasks/new' do
     redirect_if_not_logged_in
+    @user = current_user
     @lists = List.all
     erb :'/tasks/new'
   end
